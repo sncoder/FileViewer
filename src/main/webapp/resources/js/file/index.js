@@ -48,7 +48,7 @@ let app = new Vue({
             if (this.file.parentPath === null) {
                 this.$message.warning('已经是根目录了');
             } else {
-                this.getFiles(this.file.parentPath);
+                this.getFiles(this.file.parentPath, 1);
             }
         },
         getIconClass: function (name) { return 'ico ico-' + getExtName(name); },

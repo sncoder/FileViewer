@@ -46,7 +46,7 @@
     <el-header style="height: auto">
         <el-card>
             <div slot="header" style="width: 100%">
-                <el-input style="width: 100%" v-model="path" size="mini" @keydown.enter.native="getFiles(path)">
+                <el-input style="width: 100%" v-model="path" size="mini" @keydown.enter.native="getFiles(path, 1)">
                     <template slot="prepend">
                         <el-button @click="backPath"><i class="fa fa-arrow-left"></i></el-button>
                     </template>
@@ -130,7 +130,7 @@
                 <el-table-column type="selection"></el-table-column>
                 <el-table-column label="文件名" min-width="500px">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.dir" class="cursor" @click.stop="getFiles(scope.row.path)">
+                        <span v-if="scope.row.dir" class="cursor" @click.stop="getFiles(scope.row.path, 1)">
                             <span class="ico ico-folder"></span>{{ cutName(scope.row.name) }}
                         </span>
                         <span v-if="!scope.row.dir">
