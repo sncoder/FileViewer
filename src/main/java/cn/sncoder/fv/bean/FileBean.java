@@ -1,9 +1,15 @@
 package cn.sncoder.fv.bean;
 
-import java.util.Objects;
-
+/**
+ * 用于前后端传输信息的类，表示一个文件（夹）
+ *
+ * @author shibiao
+ */
 public class FileBean {
 
+    /**
+     * 文件所属者的用户名，来源参考
+     */
     private String user;
 
     private String name;

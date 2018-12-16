@@ -40,5 +40,14 @@
             <bean class="cn.sncoder.fv.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
+    
+    <!--<mvc:cors>-->
+        <!--<mvc:mapping path="/**"-->
+                     <!--allowed-origins="*"-->
+                     <!--allowed-methods="GET, POST, OPTIONS, PUT, PATCH, DELETE"-->
+                     <!--allowed-headers="*"-->
+                     <!--allow-credentials="true"-->
+                     <!--max-age="3600"/>-->
+    <!--</mvc:cors>-->
 
 </beans>

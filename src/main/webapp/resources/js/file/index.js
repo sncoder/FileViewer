@@ -266,6 +266,7 @@ let app = new Vue({
             this.sendPost('/file/fileKey', { path: file.path }, null, loading, false, false, data => {
                 if (!data.success) { this.$message.error(data.msg); return; }
                 this.downloadDialog.key = data.msg;
+                this.downloadDialog.fileName = file.name;
                 this.downloadDialog.visible = true;
             });
         },
@@ -452,5 +453,6 @@ let app = new Vue({
             || getCookie('batchNames')) {
             this.pasteShow = true;
         }
+        setInterval("app.getFiles()", 60 * 1000);
     }
 });

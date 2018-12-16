@@ -197,8 +197,9 @@ public class CompressUtil {
      */
     private static void parallelZipCompress(File targetFile, File ... srcFiles) throws IOException {
         ParallelScatterZipCreator scatterZipCreator = new ParallelScatterZipCreator();
-        long now = System.currentTimeMillis();
-        File tempFile = File.createTempFile(String.valueOf(now), ".tmp");
+        // 之所以创建临时文件夹的原因是：当 tomcat 目录下没有 temp 文件夹时会报错：No such file or directory
+        FileUtils.forceMkdir(new File(System.getProperty("java.io.tmpdir")));
+        File tempFile = File.createTempFile("COMPRESS", ".tmp");
         ScatterZipOutputStream dirs = ScatterZipOutputStream.fileBased(tempFile);
         ZipArchiveOutputStream zipOut = null;
         try {

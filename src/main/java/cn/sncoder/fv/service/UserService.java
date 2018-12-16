@@ -18,6 +18,10 @@ public class UserService {
         return userDB.get(user.getUsername(), user.getPassword());
     }
 
+    public User getByUsername(String username) {
+        return userDB.get(username);
+    }
+
     public boolean makePathMark(User user, String name, String path) {
         PathMark pathMark = new PathMark(name, path);
         return userDB.addPathMark(user.getUsername(), pathMark);

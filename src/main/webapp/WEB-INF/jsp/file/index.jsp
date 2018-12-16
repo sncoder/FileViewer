@@ -80,11 +80,21 @@
                         </el-dropdown>
                         <el-button type="primary" size="mini" @click="backPath"><i class="fa fa-arrow-left"></i></el-button>
                         <span><el-button type="primary" size="mini" @click="getFiles(path)" icon="el-icon-refresh"></el-button></span>
-                        <span><el-button v-show="pasteShow" type="warning" size="mini" @click="paste"><i class="fa fa-paste"></i></el-button></span>
-                        <span><el-button type="success" v-show="batchShow" size="mini" @click="batchCopy(path)"><i class="fa fa-copy"></i></el-button></span>
-                        <span><el-button type="success" v-show="batchShow" size="mini" @click="batchCut(path)"><i class="fa fa-cut"></i></el-button></span>
-                        <span><el-button type="success" v-show="batchShow" size="mini" @click="compressSelected"><i class="fa fa-file-archive"></i></el-button></span>
-                        <span><el-button type="success" v-show="batchShow" size="mini" @click="batchDel"><i class="fa fa-trash-alt"></i></el-button></span>
+                        <transition name="el-zoom-in-center">
+                            <span v-show="pasteShow"><el-button type="warning" size="mini" @click="paste"><i class="fa fa-paste"></i></el-button></span>
+                        </transition>
+                        <transition name="el-zoom-in-center">
+                            <span v-show="batchShow"><el-button type="success" size="mini" @click="batchCopy(path)"><i class="fa fa-copy"></i></el-button></span>
+                        </transition>
+                        <transition name="el-zoom-in-center">
+                            <span v-show="batchShow"><el-button type="success" size="mini" @click="batchCut(path)"><i class="fa fa-cut"></i></el-button></span>
+                        </transition>
+                        <transition name="el-zoom-in-center">
+                            <span v-show="batchShow"><el-button type="success" size="mini" @click="compressSelected"><i class="fa fa-file-archive"></i></el-button></span>
+                        </transition>
+                        <transition name="el-zoom-in-center">
+                            <span v-show="batchShow"><el-button type="success" size="mini" @click="batchDel"><i class="fa fa-trash-alt"></i></el-button></span>
+                        </transition>
                     </el-col>
                 </el-row>
                 <el-row>
@@ -109,7 +119,7 @@
     </el-header>
     <el-main>
         <el-card>
-            <div slot="header">
+            <transition name="el-zoom-in-center">
                 <el-pagination
                         v-show="pager.total > pager.pageSize"
                         background
@@ -119,7 +129,7 @@
                         layout="total, prev, pager, next, jumper"
                         @current-change="changePage"
                         style="white-space: initial"></el-pagination>
-            </div>
+            </transition>
             <el-table
                 ref="fileTable"
                 :data="files"
@@ -163,6 +173,17 @@
                     </template>
                 </el-table-column>
             </el-table>
+            <transition name="el-zoom-in-center">
+                <el-pagination
+                        v-if="pager.total > pager.pageSize"
+                        background
+                        :current-page="pager.currentPage"
+                        :page-size="pager.pageSize"
+                        :total="pager.total"
+                        layout="total, prev, pager, next, jumper"
+                        @current-change="changePage"
+                        style="white-space: initial"></el-pagination>
+            </transition>
         </el-card>
     </el-main>
     <el-dialog title="上传文件" :visible.sync="uploadDialog.visible" width="260px" :before-close="closeUpload" :close-on-click-modal="false">
@@ -197,9 +218,10 @@
             <el-button type="primary" :loading="uploadDialog.loading" @click="startUpload">{{ this.buttonLoading ? '上传中...' : '开始上传' }}</el-button>
         </div>
     </el-dialog>
-    <el-dialog :visible.sync="downloadDialog.visible" :show-close="false" width="225px">
+    <el-dialog :visible.sync="downloadDialog.visible" :show-close="false" width="340px">
         <el-button type="primary" @click="download">下载</el-button>
         <el-button type="success" class="clipCopy" :data-clipboard-text="'${basePath}/download/' + downloadDialog.key">复制链接</el-button>
+        <el-button type="success" class="clipCopy" :data-clipboard-text="'wget -O ' + downloadDialog.fileName + ' ${basePath}/download/' + downloadDialog.key">复制wget</el-button>
     </el-dialog>
     <el-dialog :title="'编辑文件[' + editFileDialog.file.path + ']'" :visible.sync="editFileDialog.visible" width="90%" top="25px" :close-on-click-modal="false">
         <div>

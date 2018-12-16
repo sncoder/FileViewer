@@ -2,9 +2,21 @@ package cn.sncoder.fv.bean;
 
 import java.util.Objects;
 
+/**
+ * 此对象代表用户的一个书签，保存在user.db的pathMarks中
+ *
+ * @author shibiao
+ */
 public class PathMark {
 
+    /**
+     * 书签名
+     */
     private String name;
+
+    /**
+     * 相对路径
+     */
     private String path;
 
     public PathMark() {}

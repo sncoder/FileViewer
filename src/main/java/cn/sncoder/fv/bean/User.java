@@ -4,15 +4,39 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * 代表一个用户
+ *
+ * @author shibiao
+ */
 public class User {
 
+    /**
+     * 用户名
+     */
     @NotEmpty(message = "用户名不能为空")
     private String username;
+
+    /**
+     * 密码，使用明文存储
+     */
     @NotEmpty(message = "密码不能为空")
     private String password;
-    @NotEmpty(message = "根路径不能为空")
+
+    /**
+     * 用户根目录，此为磁盘的真实目录
+     */
+    @NotEmpty(message = "根目录不能为空")
     private String rootPath;
+
+    /**
+     * 用户创建的书签
+     */
     private List<PathMark> pathMarks;
+
+    /**
+     * 用户角色，0：可创建新用户，1：不可创建新用户
+     */
     private Integer role;
 
     public String getUsername() {

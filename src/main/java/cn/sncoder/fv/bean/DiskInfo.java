@@ -1,9 +1,25 @@
 package cn.sncoder.fv.bean;
 
+/**
+ * 用于前后端传输信息的类，表示磁盘空间信息，单位：字节
+ *
+ * @author shibiao
+ */
 public class DiskInfo {
 
+    /**
+     * 磁盘总空间
+     */
     private long total;
+
+    /**
+     * 磁盘可用空间
+     */
     private long usable;
+
+    /**
+     * 磁盘已用空间
+     */
     private long used;
 
     public DiskInfo() {
