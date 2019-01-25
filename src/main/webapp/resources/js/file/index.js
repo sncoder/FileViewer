@@ -1,3 +1,5 @@
+let DEFAULT_REFRESH_INTERVAL = 180;
+
 let app = new Vue({
     el: '#app',
     data: {
@@ -23,9 +25,19 @@ let app = new Vue({
         length: 0,
         pasteShow: false,
         batchShow: false,
-        selectedFiles: []
+        selectedFiles: [],
+        refreshCountdown: DEFAULT_REFRESH_INTERVAL
     },
     methods: {
+        beginRefreshCountdown: function() {
+            if (this.refreshCountdown > 0) {
+                --this.refreshCountdown;
+            } else {
+                this.refreshCountdown = DEFAULT_REFRESH_INTERVAL;
+                this.getFiles();
+            }
+            setTimeout('app.beginRefreshCountdown()', 1000);
+        },
         getUser: function () { axios.get('/user/getUser').then(({data}) => this.user = data); },
         getFiles: function (path = this.path, page = this.pager.currentPage) {
             this.tableLoading = true;
@@ -41,6 +53,7 @@ let app = new Vue({
                     this.file = data.file;
                     this.diskInfo = data.diskInfo;
                     setCookie('path', this.path);
+                    this.refreshCountdown = DEFAULT_REFRESH_INTERVAL;
                 });
         },
         changePage: function(page) { this.getFiles(undefined, page); },
@@ -453,6 +466,6 @@ let app = new Vue({
             || getCookie('batchNames')) {
             this.pasteShow = true;
         }
-        setInterval("app.getFiles()", 60 * 1000);
+        this.beginRefreshCountdown();
     }
 });
